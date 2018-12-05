@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.5)
+project(Tagger)
+
+set(CMAKE_CXX_STANDARD 11)
+
+add_executable(Tagger main.cpp AVL_Tree.h List.h ImageTagger.h Image.h)
