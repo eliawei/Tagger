@@ -9,8 +9,8 @@
 #include <iostream>
 
 using namespace std;
+#include "exceptions.h"
 
-class not_found:public std::exception{};
 
 template<class S, class T>
 class AVL_Tree {
@@ -277,6 +277,14 @@ private:
         }
     }
 
+    void tree_to_array_aux(T* arr,Node* node,int& i){
+        if (node == nullptr) {
+            return;
+        }
+        tree_to_array_aux(arr,node->left,i);
+        arr[i++]=node->data;
+        tree_to_array_aux(arr,node->right,i);
+    }
 public:
     virtual ~AVL_Tree() {
         destroy_tree(root);
@@ -402,6 +410,14 @@ public:
     int getSize() const {
         return size;
     }
+
+    T* tree_to_array(){
+        T* arr=new T[(this->size)* sizeof(T)];
+        int i=0;
+        tree_to_array_aux(arr,root,i);
+        return arr;
+    }
+
 
 };
 
