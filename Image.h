@@ -10,10 +10,10 @@
 
 class Image {
 private:
-    int* segments;
     int seg_num;
+    int* segments;
     void** pointers;
-    List<int,int> not_labled;
+    List<int,int> not_labeled;
 public:
     Image(int seg_num);
     ~Image();
@@ -21,7 +21,8 @@ public:
     int get_label(int seg_id);
     void delete_label(int seg_id);
     int* get_all_unlabled_segments(int* numOfSegments);
-    int* get_all_segments_by_label(int label, int* numOfSegments);
+    int* get_all_segments_by_label(int label);
+    int get_num_of_segments_by_label();
 };
 
 
