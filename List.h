@@ -6,8 +6,7 @@
 #define MWET1_LIST_H
 
 #include <iostream>
-
-class not_found:public std::exception{};
+#include "exceptions.h"
 
 template <class K, class D>
 class List {

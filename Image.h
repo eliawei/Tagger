@@ -20,8 +20,8 @@ public:
     void add_label(int seg_id,int label);
     int get_label(int seg_id);
     void delete_label(int seg_id);
-    int* get_all_unlabled_segments();
-    int* get_all_segments_by_label(int label);
+    int* get_all_unlabled_segments(int* numOfSegments);
+    int* get_all_segments_by_label(int label, int* numOfSegments);
 };
 
 

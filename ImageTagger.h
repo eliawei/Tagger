@@ -7,6 +7,7 @@
 
 #include "AVL_Tree.h"
 #include "Image.h"
+#include "exceptions.h"
 
 class ImageTagger {
 private:
@@ -15,13 +16,14 @@ private:
 public:
     ImageTagger(int seg_limit);
     ~ImageTagger();
+    int get_size() {return this->images.getSize();};
     void add_image(int image_id);
     void delete_image(int image_id);
     void add_label(int image_id, int seg_id,int label);
     int get_label(int image_id,int seg_id);
     void delete_label(int image_id,int seg_id);
-    int* get_all_unlabled_segments(int image_id);
-    int** get_all_segments_by_label(int label);
+    int* get_all_unlabled_segments(int image_id, int* numOfSegments);
+    int* get_all_segments_by_label(int label, int* numOfSegments);
 };
 
 
