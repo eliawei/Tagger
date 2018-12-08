@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include "exceptions.h"
 
 using namespace std;
 #include "exceptions.h"
@@ -211,14 +212,14 @@ private:
      * Prints out the tree in an in order method.
      * @param root: starts from given root.
      */
-    void print_in_order(Node *node) {
+    void print_in_order(Node *root) {
 
-        if (node == nullptr) {
+        if (root == nullptr) {
             return;
         }
-        print_in_order(node->left);
-        node->print_node();
-        print_in_order(node->right);
+        print_in_order(root->left);
+        root->print_node();
+        print_in_order(root->right);
     }
 
     Node *internal_find(Node *node, const S &key) {

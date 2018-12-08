@@ -13,7 +13,7 @@ private:
     int seg_num;
     int* segments;
     void** pointers;
-    List<int,int> not_labeled;
+    List<int,int> not_labeled_segments;
 public:
     Image(int seg_num);
     ~Image();
