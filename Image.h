@@ -16,6 +16,8 @@ private:
     List<int,int> not_labeled_segments;
 public:
     Image(int seg_num);
+    Image(const Image& im);
+    Image& operator =(const Image& im);
     ~Image();
     void add_label(int seg_id,int label);
     int get_label(int seg_id);

@@ -23,7 +23,7 @@ class AVL_Tree {
         Node *right = nullptr;
         Node *parent = nullptr;
     public:
-        Node(const S &key, T* data) : key(key), data(data) {}
+        Node(const S &key,const T & data) : key(key), data(data) {}
 
         bool is_right_son() {
             return parent->key < key;
@@ -311,7 +311,7 @@ public:
 /**
  * gets data and key,makes a node and inserts it to tree
  */
-    void insert(const S &key,  T *data, void** node) {
+    void insert(const S &key,  const T &data, void** node) {
         Node* new_node = new Node(key, data);
 
         if (!root) {
@@ -330,7 +330,10 @@ public:
         *node = new_node;
     }
 
-
+    T search_return_data(const S &key) {
+        Node* wanted_node = find(key);
+        return wanted_node->data;
+    }
     void search(const S &key, void** value) {
         Node* wanted_node = find(key);
         *value = wanted_node->data;
