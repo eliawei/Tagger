@@ -125,6 +125,8 @@ StatusType GetAllUnLabeledSegments(void *DS, int imageID, int **segments, int *n
        return INVALID_INPUT;
    }
    try {
+       ImageTagger* im_tag;
+       im_tag = (ImageTagger*)DS;
 
    }
 
