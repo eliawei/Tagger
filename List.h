@@ -53,9 +53,9 @@ public:
     ~List() {
         Node* node = this->head;
         Node* next;
-        while (node != NULL) {
+        while (node != nullptr) {
             next = node->next;
-            delete node; //does it work?!
+            delete node;
             this->size--;
             node = next;
         }
@@ -126,22 +126,35 @@ public:
      * @param node_to_delete - pointer for the node to be deleted.
      */
     void removeByPointer(void* node_to_delete) {
-        Node* node = (Node*)node_to_delete;
+        Node* node = ((Node*)(node_to_delete));
         if (node == this->head) {
             this->head = this->head->next;
         }
 
-        if (node->prev != NULL) {
+        if (node->prev != nullptr) {
             node->prev->next = node->next;
         }
 
-        if (node->next != NULL) {
+        if (node->next != nullptr) {
             node->next->prev = node->prev;
         }
 
         delete node;
+
         this->size--;
     }
+    /**
+     * TEST FUNCTION
+     */
+/**
+ *
+
+    void print(){
+        for (Node* i = this->head;i->next!= nullptr; i=i->next) {
+            cout<<i->key<<endl;
+        }
+    }
+    */
 
 };
 

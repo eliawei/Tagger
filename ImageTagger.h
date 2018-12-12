@@ -10,12 +10,14 @@
 
 class ImageTagger {
 private:
-    AVL_Tree<int,Image> images;
+    AVL_Tree<int,Image*> images;
     int seg_limit;
 public:
     ImageTagger(int seg_limit);
+    ImageTagger(const ImageTagger& it);
+    ImageTagger&operator = (const ImageTagger& it);
     ~ImageTagger();
-    int get_size() {return this->images.getSize();};
+    int get_size() {return this->images.getSize();}
     int get_seg_lim() {return this->seg_limit;}
     void add_image(int image_id);
     void delete_image(int image_id);
@@ -24,6 +26,11 @@ public:
     void delete_label(int image_id, int seg_id);
     int* get_all_unlabled_segments(int image_id, int* numOfSegments);
     int* get_all_segments_by_label(int label, int* numOfSegments);
+
+    //for testing
+    void print(){
+        images.print();
+    }
 };
 
 
