@@ -17,14 +17,16 @@ template<class S, class T>
 class AVL_Tree {
     class Node {
         S key;
-        T data;
+        T *data;
         int height; //AVL patch
         Node *left = nullptr;
         Node *right = nullptr;
         Node *parent = nullptr;
     public:
-        Node(const S &key, const T &data) : key(key), data(data) {}
-
+        Node(const S &key, T* data) : key(key), data(data) {}
+        ~Node(){
+            delete data;
+        }
         bool is_right_son() {
             return parent->key < key;
         }
@@ -187,6 +189,7 @@ private:
         if (node == nullptr) {
             return;
         }
+
         destroy_tree(node->left);
         destroy_tree(node->right);
         delete node;
@@ -290,12 +293,24 @@ public:
     virtual ~AVL_Tree() {
         destroy_tree(root);
     }
-
+    AVL_Tree():root(nullptr),size(0){}
+    AVL_Tree(const AVL_Tree& avl){
+        this->root=avl.root;
+        this->size=avl.size;
+    }
+    AVL_Tree& operator=(const AVL_Tree& avl){
+        if(&avl != this){
+            root=avl.root;
+            size=avl.size;
+        }
+        return *this;
+    }
 /**
  * gets data and key,makes a node and inserts it to tree
  */
-    void insert(const S &key, const T &data, void** node) {
+    void insert(const S &key,  T *data, void** node) {
         Node* new_node = new Node(key, data);
+
         if (!root) {
             root = new_node;
         } else {
@@ -315,8 +330,7 @@ public:
 
     void search(const S &key, void** value) {
         Node* wanted_node = find(key);
-        *value = wanted_node->data;
-        return;
+        *value = (wanted_node->data);
     }
     /**
      * With given key, return the node holds it.
