@@ -4,21 +4,21 @@
 #include "library2.h"
 #include "ImageTagger.h"
 
-void *Init(int segments) {
-    if (segments <= 0) {
+void* Init(int segments){
+    if(segments<=0){
         return NULL;
     }
-    ImageTagger *DS = new ImageTagger(segments);
-    return (void *) DS;
+    ImageTagger* DS = new ImageTagger(segments);
+    return (void*)DS;
 }
 
 StatusType AddImage(void *DS, int imageID) {
-    if (!DS || imageID <= 0) {
+    if (!DS||imageID <= 0) {
         return INVALID_INPUT;
     }
     if (DS != NULL) {
         try {
-            ((ImageTagger *) DS)->add_image(imageID);
+            ((ImageTagger*)DS)->add_image(imageID);
         } catch (bad_alloc &ba) {
             return ALLOCATION_ERROR;
         } catch (already_exists &ae) {
@@ -32,14 +32,14 @@ StatusType AddImage(void *DS, int imageID) {
 }
 
 StatusType DeleteImage(void *DS, int imageID) {
-    if (DS == NULL || imageID <= 0) {
+    if( DS == NULL || imageID <= 0 ) {
         return INVALID_INPUT;
     }
     try {
-        ((ImageTagger *) DS)->delete_image(imageID);
-    } catch (bad_alloc &ba) {
+        ((ImageTagger*)DS)->delete_image(imageID);
+    }catch (bad_alloc& ba){
         return ALLOCATION_ERROR;
-    } catch (not_found &nf) {
+    }catch (not_found& nf){
         return FAILURE;
     }
     return SUCCESS;
@@ -49,21 +49,21 @@ StatusType AddLabel(void *DS, int imageID, int segmentID, int label) {
 
     int seg_lim;
     if (DS != NULL) {
-        seg_lim = ((ImageTagger *) DS)->get_seg_lim();
+        seg_lim = ((ImageTagger*)DS)->get_seg_lim();
     }
 
-    if (DS == NULL || segmentID >= seg_lim || segmentID < 0 ||
+    if ( DS == NULL ||segmentID >= seg_lim || segmentID <0 ||
         imageID <= 0 || label <= 0) {
         return INVALID_INPUT;
     }
 
     try {
-        ((ImageTagger *) DS)->add_label(imageID, segmentID, label);
-    } catch (bad_alloc &ba) {
+        ((ImageTagger*)DS)->add_label(imageID, segmentID, label);
+    } catch (bad_alloc& ba) {
         return ALLOCATION_ERROR;
-    } catch (not_found &nf) {
+    } catch (not_found& nf) {
         return FAILURE;
-    } catch (already_labeled &al) {
+    } catch (already_labeled& al) {
         return FAILURE;
     }
 
@@ -71,7 +71,7 @@ StatusType AddLabel(void *DS, int imageID, int segmentID, int label) {
 }
 
 StatusType GetLabel(void *DS, int imageID, int segmentID, int *label) {
-    ImageTagger *im_tag;
+    ImageTagger* im_tag;
     int seg_lim;
 
     if (DS == NULL || segmentID < 0 ||
@@ -84,14 +84,13 @@ StatusType GetLabel(void *DS, int imageID, int segmentID, int *label) {
 
     if (segmentID >= seg_lim) {
         return INVALID_INPUT;
-
     }
 
     try {
         *label = im_tag->get_label(imageID, segmentID);
-    } catch (not_found &nf) {
+    } catch (not_found& nf) {
         return FAILURE;
-    } catch (not_labeled &nl) {
+    } catch (not_labeled& nl) {
         return FAILURE;
     }
 
@@ -99,7 +98,7 @@ StatusType GetLabel(void *DS, int imageID, int segmentID, int *label) {
 }
 
 StatusType DeleteLabel(void *DS, int imageID, int segmentID) {
-    ImageTagger *im_tag;
+    ImageTagger* im_tag;
     int seg_lim;
 
 
@@ -116,9 +115,9 @@ StatusType DeleteLabel(void *DS, int imageID, int segmentID) {
 
     try {
         im_tag->delete_label(imageID, segmentID);
-    } catch (not_found &nf) {
+    } catch (not_found& nf) {
         return FAILURE;
-    } catch (not_labeled &nl) {
+    } catch (not_labeled& nl) {
         return FAILURE;
     }
 
@@ -145,13 +144,27 @@ StatusType GetAllUnLabeledSegments(void *DS, int imageID, int **segments,
     return SUCCESS;
 }
 
-StatusType
-GetAllSegmentsByLabel(void *DS, int label, int **images, int **segments,
-                      int *numOfSegments) {}
+StatusType GetAllSegmentsByLabel(void *DS, int label, int **images, int **segments, int *numOfSegments){
+    if( DS == NULL || label <= 0 || images == NULL || segments == NULL || numOfSegments == NULL) {
+        return INVALID_INPUT;
+    }
+    try {
+        *images = ((ImageTagger*)DS)->get_all_segments_by_label(label, numOfSegments);
+    }catch (bad_alloc& ba){
+        return ALLOCATION_ERROR;
+    }
 
-void Quit(void **DS) {
+    if(*images == NULL) {
+        *segments = NULL;
+    } else {
+        *segments = *images + *numOfSegments;
+    }
+    return SUCCESS;
+}
+
+void Quit(void** DS){
     if (DS == NULL) return;
-    delete ((ImageTagger *) *DS);
+    delete ((ImageTagger*)*DS);
     *DS = NULL;
 
 }

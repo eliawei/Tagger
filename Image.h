@@ -24,7 +24,7 @@ public:
     void delete_label(int seg_id);
     int* get_all_unlabled_segments(int* numOfSegments);
     int* get_all_segments_by_label(int label);
-    int get_num_of_segments_by_label();
+    int get_num_of_segments_by_label(int label);
 };
 
 

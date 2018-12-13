@@ -28,6 +28,32 @@ Image:: Image(const Image &im) {
     }
     this->not_labeled_segments=im.not_labeled_segments;
 }
+
+Image &Image::operator=(const Image &im) {
+    if (this != &im) {
+
+        this->seg_num = seg_num;
+
+        if (this->segments) {
+            delete[] this->segments;
+        }
+
+        if (this->pointers) {
+            delete[] this->pointers;
+        }
+
+        this->pointers = new void *[im.seg_num];
+        this->segments = new int[im.seg_num];
+        for (int i = 0; i < seg_num; ++i) {
+            this->segments[i] = im.segments[i];
+            this->pointers[i] = im.pointers[i];
+        }
+
+        this->not_labeled_segments = im.not_labeled_segments;
+    }
+    return *this;
+}
+
 Image::~Image() {
 
     delete[] segments;
@@ -81,30 +107,32 @@ int* Image::get_all_unlabled_segments(int* numOfSegments) {
 }
 
 int* Image::get_all_segments_by_label(int label) {
+    int num_of_seg_by_label = this->get_num_of_segments_by_label(label);
 
-}
-
-int Image::get_num_of_segments_by_label() {
-
-}
-
-Image& Image::operator=(const Image &im) {
-    if(this!=&im){
-        this->seg_num=seg_num;
-        if(this->segments) {
-            delete[] this->segments;
-        }
-        if(this->pointers) {
-            delete[] this->pointers;
-        }
-
-        this->pointers=new void*[im.seg_num];
-        this->segments=new int[im.seg_num];
-        for (int i = 0; i < seg_num; ++i) {
-            this->segments[i]=im.segments[i];
-            this->pointers[i]=im.pointers[i];
-        }
-        this->not_labeled_segments=im.not_labeled_segments;
+    if(num_of_seg_by_label == 0) {
+        return NULL;
     }
-    return *this;
+
+    int* labeled_segments = new int[num_of_seg_by_label];
+    int j = 0;
+
+    for (int i = 0; i < this->seg_num; ++i) {
+        if(segments[i] == label) {
+            labeled_segments[j++] = i;
+        }
+    }
+
+    return labeled_segments;
+}
+
+int Image::get_num_of_segments_by_label(int label) {
+    int num_of_seg = 0;
+
+    for(int i = 0; i < this->seg_num; ++i) {
+        if(segments[i] == label) {
+            num_of_seg++;
+        }
+    }
+
+    return num_of_seg;
 }
