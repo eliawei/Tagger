@@ -10,15 +10,17 @@
 
 class Image {
 private:
+    int id;
     int seg_num;
     int* segments;
     void** pointers;
     List<int,int> not_labeled_segments;
 public:
-    Image(int seg_num);
+    Image(int id, int seg_num);
     Image(const Image& im);
     Image& operator =(const Image& im);
     ~Image();
+    int get_id();
     void add_label(int seg_id,int label);
     int get_label(int seg_id);
     void delete_label(int seg_id);

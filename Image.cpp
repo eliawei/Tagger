@@ -4,7 +4,7 @@
 
 #include "Image.h"
 using namespace std;
-Image::Image(int seg_num): seg_num(seg_num),segments(new int[seg_num]),
+Image::Image(int id, int seg_num): id(id), seg_num(seg_num),segments(new int[seg_num]),
         pointers(new void*[seg_num]){
 
 
@@ -18,6 +18,7 @@ Image::Image(int seg_num): seg_num(seg_num),segments(new int[seg_num]),
 
 
 }
+
 Image:: Image(const Image &im) {
     this->seg_num=im.seg_num;
     this->pointers=new void*[im.seg_num];
@@ -58,6 +59,10 @@ Image::~Image() {
 
     delete[] segments;
     delete[] pointers;
+}
+
+int Image::get_id() {
+    return this->id;
 }
 
 void Image::add_label(int seg_id,int label) {

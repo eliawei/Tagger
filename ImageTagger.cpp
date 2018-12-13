@@ -24,7 +24,7 @@ void ImageTagger::add_image(int image_id) {
 
     } catch (not_found &cf) {
 
-        Image *new_im = new Image(seg_limit);
+        Image *new_im = new Image(image_id, seg_limit);
         void *p;
         images.insert(image_id, new_im, &p);
 
@@ -68,38 +68,48 @@ int *ImageTagger::get_all_unlabled_segments(int image_id, int *numOfSegments) {
 }
 
 
-int *ImageTagger::get_all_segments_by_label(int label, int *numOfSegments) {
+int **ImageTagger::get_all_segments_by_label(int label, int *numOfSegments) {
     Image** images_array = this->images.tree_to_array();
+    *numOfSegments = 0;
 
     int num_of_images = this->images.getSize();
     for(int i = 0; i < num_of_images; ++i) {
         int num_of_seg_image_i = images_array[i]->get_num_of_segments_by_label(label);
-        *numOfSegments += (num_of_seg_image_i * 2);
+        *numOfSegments += num_of_seg_image_i;
     }
 
     if(*numOfSegments == 0) {
+        delete[] images_array;
         return NULL;
     }
 
-    int* segments_by_label = (int*)malloc(*numOfSegments);
-    if(segments_by_label == NULL) {
+    int* segments_by_label = (int*)malloc(sizeof(int)*(*numOfSegments));
+    int* images_by_label = (int*)malloc(sizeof(int)*(*numOfSegments));
+    if(segments_by_label == NULL || images_by_label == NULL) {
+        delete[] images_array;
         throw bad_alloc();
     }
 
     int insert = 0;
     for(int i = 0; i < num_of_images; ++i) {
+        int image_id = images_array[i]->get_id();
         int image_i_num_of_seg = images_array[i]->get_num_of_segments_by_label(label);
         int *image_i_seg_array = images_array[i]->get_all_segments_by_label(label);
 
-        for (int i = 0; i < image_i_num_of_seg; ++i) {
-            segments_by_label[i + insert] = i;
-            segments_by_label[*numOfSegments + i + insert] = image_i_seg_array[i];
+        for (int j = 0; j < image_i_num_of_seg; ++j) {
+            images_by_label[j + insert] = image_id;
+            segments_by_label[j + insert] = image_i_seg_array[j];
         }
 
+        delete[] image_i_seg_array;
         insert += image_i_num_of_seg;
     }
 
-    return segments_by_label;
+    delete[] images_array;
+    int** arrays = new int*[2];
+    arrays[0] = images_by_label;
+    arrays[1] = segments_by_label;
+    return arrays;
 }
 
 ImageTagger::ImageTagger(const ImageTagger &it) {

@@ -26,6 +26,10 @@ class AVL_Tree {
     public:
         Node(const S &key,const T & data) : key(key), data(data) {}
 
+        ~Node() {
+            delete this->data;
+        }
+
         bool is_right_son() {
             return parent->key < key;
         }

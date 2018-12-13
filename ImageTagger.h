@@ -26,7 +26,7 @@ public:
     int get_label(int image_id, int seg_id);
     void delete_label(int image_id, int seg_id);
     int* get_all_unlabled_segments(int image_id, int* numOfSegments);
-    int* get_all_segments_by_label(int label, int* numOfSegments);
+    int** get_all_segments_by_label(int label, int* numOfSegments);
 
     //for testing
     void print(){

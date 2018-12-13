@@ -148,17 +148,24 @@ StatusType GetAllSegmentsByLabel(void *DS, int label, int **images, int **segmen
     if( DS == NULL || label <= 0 || images == NULL || segments == NULL || numOfSegments == NULL) {
         return INVALID_INPUT;
     }
+
+    int** arrays;
     try {
-        *images = ((ImageTagger*)DS)->get_all_segments_by_label(label, numOfSegments);
+        arrays = ((ImageTagger*)DS)->get_all_segments_by_label(label, numOfSegments);
     }catch (bad_alloc& ba){
+        delete[] arrays;
         return ALLOCATION_ERROR;
     }
 
-    if(*images == NULL) {
+    if(arrays == NULL) {
+        *images = NULL;
         *segments = NULL;
     } else {
-        *segments = *images + *numOfSegments;
+        *images = arrays[0];
+        *segments = arrays[1];
     }
+
+    delete[] arrays;
     return SUCCESS;
 }
 
