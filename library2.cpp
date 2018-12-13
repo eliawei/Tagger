@@ -46,7 +46,6 @@ StatusType DeleteImage(void *DS, int imageID) {
 }
 
 StatusType AddLabel(void *DS, int imageID, int segmentID, int label) {
-
     int seg_lim;
     if (DS != NULL) {
         seg_lim = ((ImageTagger*)DS)->get_seg_lim();
@@ -120,17 +119,24 @@ StatusType DeleteLabel(void *DS, int imageID, int segmentID) {
     return SUCCESS;
 }
 
-StatusType GetAllUnLabeledSegments(void *DS, int imageID, int **segments, int *numOfSegments){
-  if(!DS||imageID<=0||!segments||!numOfSegments){
-       return INVALID_INPUT;
-   }
-   try {
-       ImageTagger* im_tag;
-       im_tag = (ImageTagger*)DS;
+StatusType GetAllUnLabeledSegments(void *DS, int imageID, int **segments, int *numOfSegments){}
 
-   }
+StatusType GetAllSegmentsByLabel(void *DS, int label, int **images, int **segments, int *numOfSegments){
+    if( DS == NULL || label <= 0 || images == NULL || segments == NULL || numOfSegments == NULL) {
+        return INVALID_INPUT;
+    }
+    try {
+        *images = ((ImageTagger*)DS)->get_all_segments_by_label(label, numOfSegments);
+    }catch (bad_alloc& ba){
+        return ALLOCATION_ERROR;
+    }
 
-
+    if(*images == NULL) {
+        *segments = NULL;
+    } else {
+        *segments = *images + *numOfSegments;
+    }
+    return SUCCESS;
 }
 
 StatusType GetAllSegmentsByLabel(void *DS, int label, int **images, int **segments, int *numOfSegments){}

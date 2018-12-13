@@ -22,6 +22,7 @@ class AVL_Tree {
         Node *left = nullptr;
         Node *right = nullptr;
         Node *parent = nullptr;
+
     public:
         Node(const S &key,const T & data) : key(key), data(data) {}
 
