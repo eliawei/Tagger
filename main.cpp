@@ -515,7 +515,8 @@ int main(int argc, const char**argv) {
     cout << "Oh! WAIT!, i almost forgot to tell you..." << endl;
     cout << "you should check for memory leaks on valgrind!" << endl;
 
-    cout << "by the way, you can also add your own tests by using the YourTests function above :)" << endl;
+    cout << "by the way, my name is mud you can also add your own tests "
+            "by using the YourTests function above :)" << endl;
     YourTests();
 
     cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
