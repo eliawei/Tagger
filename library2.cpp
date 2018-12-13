@@ -24,11 +24,8 @@ StatusType AddImage(void *DS, int imageID) {
         } catch (already_exists &ae) {
             return FAILURE;
         }
-
-        return SUCCESS;
-
-
     }
+    return SUCCESS;
 }
 
 StatusType DeleteImage(void *DS, int imageID) {
@@ -152,7 +149,7 @@ StatusType GetAllSegmentsByLabel(void *DS, int label, int **images, int **segmen
         return INVALID_INPUT;
     }
 
-    int** arrays;
+    int** arrays= nullptr;
     try {
         arrays = ((ImageTagger*)DS)->get_all_segments_by_label(label, numOfSegments);
     }catch (bad_alloc& ba){

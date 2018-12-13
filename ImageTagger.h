@@ -17,7 +17,7 @@ public:
     ImageTagger(int seg_limit);
     ImageTagger(const ImageTagger& it);
     ImageTagger&operator = (const ImageTagger& it);
-    ~ImageTagger();
+    ~ImageTagger()= default;
     int get_size() {return this->images.getSize();}
     int get_seg_lim() {return this->seg_limit;}
     void add_image(int image_id);

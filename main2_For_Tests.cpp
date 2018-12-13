@@ -109,10 +109,12 @@ int main(int argc, const char**argv) {
         }
 
         // Reading commands
+        int counter=1;
         while (fgets(buffer, MAX_STRING_INPUT_SIZE, rfile) != NULL) {
             fflush(stdout);
             if (parser(buffer) == error)
                 break;
+            counter++;
         };
         fclose(rfile);
         fclose(wfile);
@@ -133,11 +135,13 @@ static commandType CheckCommand(const char* const command,
             printf("%s", command);
         return (COMMENT_CMD);
     };
+
     for (int index = 0; index < numActions; index++) {
         if (StrCmp(commandStr[index], command)) {
             *command_arg = command + strlen(commandStr[index]) + 1;
             return ((commandType)index);
         };
+
     };
     return (NONE_CMD);
 }
@@ -218,7 +222,6 @@ static errorType OnInit(void** DS, const char* const command) {
         printf("init was already called.\n");
         return (error_free);
     };
-    isInit = true;
 
     int hours;
     ValidateRead(sscanf(command, "%d", &hours), 1, "%s failed.\n", commandStr[INIT_CMD]);
@@ -230,6 +233,7 @@ static errorType OnInit(void** DS, const char* const command) {
     };
 
     fprintf(wfile, "init done.\n");
+    isInit = true;
     return error_free;
 }
 

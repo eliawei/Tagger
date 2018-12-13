@@ -6,16 +6,6 @@
 
 ImageTagger::ImageTagger(int seg_limit) : seg_limit(seg_limit) {}
 
-ImageTagger::~ImageTagger() {
-   Image** arr=images.tree_to_array();
-   int size=images.getSize();
-   for (int i = 0; i <size ; ++i) {
-      delete (arr[i]);
-   }
-
-   delete[] arr;
-}
-
 void ImageTagger::add_image(int image_id) {
     try {
 
@@ -73,6 +63,7 @@ int **ImageTagger::get_all_segments_by_label(int label, int *numOfSegments) {
 
     int num_of_images = this->images.getSize();
     for(int i = 0; i < num_of_images; ++i) {
+
         int num_of_seg_image_i = images_array[i]->get_num_of_segments_by_label(label);
         *numOfSegments += num_of_seg_image_i;
     }

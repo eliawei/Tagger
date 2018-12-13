@@ -56,7 +56,6 @@ Image &Image::operator=(const Image &im) {
 }
 
 Image::~Image() {
-
     delete[] segments;
     delete[] pointers;
 }
@@ -69,7 +68,6 @@ void Image::add_label(int seg_id,int label) {
     if ((this->segments[seg_id]) != 0) {
         throw already_labeled();
     }
-        //not_labeled_segments.print();
 
     this->not_labeled_segments.removeByPointer((this->pointers[seg_id]));
     this->pointers[seg_id] = nullptr;

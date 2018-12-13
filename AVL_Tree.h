@@ -297,22 +297,7 @@ public:
         destroy_tree(root);
     }
 
-    /*
-    AVL_Tree():root(nullptr),size(0){}
 
-    AVL_Tree(const AVL_Tree& avl){
-        this->root=avl.root;
-        this->size=avl.size;
-    }
-
-    AVL_Tree& operator=(const AVL_Tree& avl){
-        if(&avl != this){
-            root=avl.root;
-            size=avl.size;
-        }
-        return *this;
-    }
-     */
 /**
  * gets data and key,makes a node and inserts it to tree
  */
@@ -427,7 +412,9 @@ public:
             //Case 2- has 2 children
             Node *temp = node->next_inorder();
             node->key = temp->key;
+            delete node->data;
             node->data = temp->data;
+            temp->data= nullptr;
             node->right = remove_by_pointer(node->right, temp->key);
         }
         return node;
