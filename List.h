@@ -143,19 +143,17 @@ public:
 
         this->size--;
     }
-    /**
-     * TEST FUNCTION
-     */
-/**
- *
 
-    void print(){
-        for (Node* i = this->head;i->next!= nullptr; i=i->next) {
-            cout<<i->key<<endl;
+    K* list_to_array_keys(K* keys_arr){
+
+        int i=0;
+
+        for (Node* node=head; node!= nullptr ; node=node->next) {
+            keys_arr[i++]=node->data;
         }
-    }
-    */
 
+        return keys_arr;
+    }
 };
 
 

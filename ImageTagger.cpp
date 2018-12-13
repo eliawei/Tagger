@@ -6,7 +6,15 @@
 
 ImageTagger::ImageTagger(int seg_limit) : seg_limit(seg_limit) {}
 
-ImageTagger::~ImageTagger() {}
+ImageTagger::~ImageTagger() {
+   Image** arr=images.tree_to_array();
+   int size=images.getSize();
+   for (int i = 0; i <size ; ++i) {
+      delete (arr[i]);
+   }
+
+   delete[] arr;
+}
 
 void ImageTagger::add_image(int image_id) {
     try {
@@ -16,6 +24,7 @@ void ImageTagger::add_image(int image_id) {
         Image *new_im = new Image(seg_limit);
         void *p;
         images.insert(image_id, new_im, &p);
+
         return;
     }
     throw already_exists();
@@ -44,7 +53,11 @@ void ImageTagger::delete_label(int image_id, int seg_id) {
 }
 
 int *
-ImageTagger::get_all_unlabled_segments(int image_id, int *numOfSegments) {}
+ImageTagger::get_all_unlabled_segments(int image_id, int *numOfSegments) {
+    Image* image;
+    this->images.search(image_id,(void**)&image);
+    return (image->get_all_unlabled_segments(numOfSegments));
+}
 
 int *
 ImageTagger::get_all_segments_by_label(int label, int *numOfSegments) {

@@ -12,6 +12,7 @@ class ImageTagger {
 private:
     AVL_Tree<int,Image*> images;
     int seg_limit;
+
 public:
     ImageTagger(int seg_limit);
     ImageTagger(const ImageTagger& it);

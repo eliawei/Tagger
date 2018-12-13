@@ -63,7 +63,22 @@ void Image::delete_label(int seg_id) {
     this->not_labeled_segments.insert(seg_id, seg_id,
             &this->pointers[seg_id]);
 }
-int* Image::get_all_unlabled_segments(int* numOfSegments) {}
+
+int* Image::get_all_unlabled_segments(int* numOfSegments) {
+
+    int size_of_list=not_labeled_segments.getSize();
+    *numOfSegments=size_of_list;
+
+    if(size_of_list==0){
+        throw all_labeled();
+    }
+
+
+    int* seg_array=(int*)malloc(sizeof(int)*size_of_list);
+    not_labeled_segments.list_to_array_keys(seg_array);
+
+    return seg_array;
+}
 
 int* Image::get_all_segments_by_label(int label) {
 
