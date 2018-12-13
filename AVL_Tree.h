@@ -104,7 +104,7 @@ class AVL_Tree {
             }
 
             left_son->parent = this->parent;
-            if (left_son->parent != NULL) {
+            if (left_son->parent != nullptr) {
                 if (left_son->is_right_son()) {
                     left_son->parent->right = left_son;
                 } else {
@@ -130,7 +130,7 @@ class AVL_Tree {
             }
 
             right_son->parent = this->parent;
-            if (right_son->parent != NULL) {
+            if (right_son->parent != nullptr) {
                 if (right_son->is_right_son()) {
                     right_son->parent->right = right_son;// for normal RR - if it's part of LR need to do something else
                 } else {
@@ -279,7 +279,7 @@ private:
     }
 
     void update_root(Node* node) {
-        if (node->parent->parent == NULL) {
+        if (node->parent->parent == nullptr) {
             this->root = node->parent;
         }
     }

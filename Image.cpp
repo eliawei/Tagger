@@ -72,7 +72,7 @@ void Image::add_label(int seg_id,int label) {
         //not_labeled_segments.print();
 
     this->not_labeled_segments.removeByPointer((this->pointers[seg_id]));
-    this->pointers[seg_id] = NULL;
+    this->pointers[seg_id] = nullptr;
     this->segments[seg_id] = label;
 
 }
@@ -89,10 +89,9 @@ void Image::delete_label(int seg_id) {
     if (this->segments[seg_id] == 0) {
         throw not_labeled();
     }
-    this->segments[seg_id] = 0;
 
-    this->not_labeled_segments.insert(seg_id, seg_id,
-            &this->pointers[seg_id]);
+    this->segments[seg_id] = 0;
+    this->not_labeled_segments.insert(seg_id, seg_id, &(this->pointers[seg_id]));
 }
 
 int* Image::get_all_unlabled_segments(int* numOfSegments) {
@@ -106,6 +105,11 @@ int* Image::get_all_unlabled_segments(int* numOfSegments) {
 
 
     int* seg_array=(int*)malloc(sizeof(int)*size_of_list);
+
+    if(seg_array == nullptr) {
+        throw bad_alloc();
+    }
+
     not_labeled_segments.list_to_array_keys(seg_array);
 
     return seg_array;
@@ -115,7 +119,7 @@ int* Image::get_all_segments_by_label(int label) {
     int num_of_seg_by_label = this->get_num_of_segments_by_label(label);
 
     if(num_of_seg_by_label == 0) {
-        return NULL;
+        return nullptr;
     }
 
     int* labeled_segments = new int[num_of_seg_by_label];

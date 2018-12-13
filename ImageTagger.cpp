@@ -27,7 +27,6 @@ void ImageTagger::add_image(int image_id) {
         Image *new_im = new Image(image_id, seg_limit);
         void *p;
         images.insert(image_id, new_im, &p);
-
         return;
 
     }
@@ -80,12 +79,12 @@ int **ImageTagger::get_all_segments_by_label(int label, int *numOfSegments) {
 
     if(*numOfSegments == 0) {
         delete[] images_array;
-        return NULL;
+        return nullptr;
     }
 
     int* segments_by_label = (int*)malloc(sizeof(int)*(*numOfSegments));
     int* images_by_label = (int*)malloc(sizeof(int)*(*numOfSegments));
-    if(segments_by_label == NULL || images_by_label == NULL) {
+    if(segments_by_label == nullptr || images_by_label == nullptr) {
         delete[] images_array;
         throw bad_alloc();
     }

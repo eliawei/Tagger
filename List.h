@@ -27,8 +27,8 @@ class List {
         Node(const K& key, const D& data) :
                     key(key),
                     data(data),
-                    next(NULL),
-                    prev(NULL) {};
+                    next(nullptr),
+                    prev(nullptr) {};
 
 
         /**
@@ -45,7 +45,7 @@ public:
     /**
      * list c'tor' - construct an empty list.
      */
-    List(): size(0), head(NULL){}
+    List(): size(0), head(nullptr){}
 
     /**
      * list d'tor - deletes the given list and all of it's nodes.
@@ -94,10 +94,10 @@ public:
      */
     void search(const K& key, void** value) {
         Node* wanted_node = this->head;
-        while (wanted_node != NULL && wanted_node->key != key) {
+        while (wanted_node != nullptr && wanted_node->key != key) {
             wanted_node = wanted_node->next;
         }
-            if (wanted_node == NULL) {
+            if (wanted_node == nullptr) {
                 throw not_found();
             }
 
@@ -111,10 +111,10 @@ public:
      */
     void remove(const K& key) {
         Node* node_to_delete = this->head;
-        while (node_to_delete != NULL && node_to_delete->key != key) {
+        while (node_to_delete != nullptr && node_to_delete->key != key) {
             node_to_delete = node_to_delete->next;
         }
-        if (node_to_delete == NULL) {
+        if (node_to_delete == nullptr) {
             throw not_found();
         }
 
